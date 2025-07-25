@@ -1,0 +1,71 @@
+ local Players = game:GetService("Players")
+ local player = Players.LocalPlayer 
+ local playerGui = player:WaitForChild("PlayerGui")
+  
+ local screenGui = Instance.new("ScreenGui")
+ screenGui.Name = "LoadingGui"
+ screenGui.IgnoreGuiInset = true 
+ screenGui.Parent = playerGui 
+  
+ local frame = Instance.new("Frame")
+ frame.Name = "LoadingFrame"
+ frame.AnchorPoint = Vector2.new(0.5, 0.5)
+ frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+ frame.Size = UDim2.new(0, 300, 0, 150)
+ frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+ frame.BorderSizePixel = 0 
+ frame.BackgroundTransparency = 0.2 
+  
+ local corner = Instance.new("UICorner")
+ corner.CornerRadius = UDim.new(0, 12)
+ corner.Parent = frame
+  
+ local textLabel = Instance.new("TextLabel")
+ textLabel.Text = "已寻找到游戏！加载Ringta脚本中...请等20秒...."
+ textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+ textLabel.TextSize = 18 
+ textLabel.Font = Enum.Font.Gotham 
+ textLabel.BackgroundTransparency = 1
+ textLabel.Size = UDim2.new(0.9, 0, 0.8, 0)
+ textLabel.Position = UDim2.new(0.05, 0, 0.1, 0)
+ textLabel.TextWrapped = true
+ textLabel.TextXAlignment = Enum.TextXAlignment.Left 
+ textLabel.Parent = frame
+  
+ local loadingBar = Instance.new("Frame")
+ loadingBar.Name = "LoadingBar"
+ loadingBar.Size = UDim2.new(0.9, 0, 0.05, 0)
+ loadingBar.Position = UDim2.new(0.05, 0, 0.8, 0)
+ loadingBar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+ loadingBar.BorderSizePixel = 0 
+ loadingBar.Parent = frame
+  
+ local barFill = Instance.new("Frame")
+ barFill.Name = "BarFill"
+ barFill.Size = UDim2.new(0, 0, 1, 0)
+ barFill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+ barFill.BorderSizePixel = 0
+ barFill.Parent = loadingBar
+  
+ frame.Parent = screenGui
+  
+ local duration = 20
+ local startTime = tick()
+  
+ local function update()
+     local elapsed = tick() - startTime
+     local progress = math.min(elapsed / duration, 1)
+     
+     barFill.Size = UDim2.new(progress, 0, 1, 0)
+     
+     if progress >= 1 then 
+         screenGui:Destroy()
+         return
+     end 
+     
+     task.wait()
+     update()
+ end
+  
+ update()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/wefwef127382/DEADRAILS.github.io/refs/heads/main/mainringta.lua"))()
